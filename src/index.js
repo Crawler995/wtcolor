@@ -47,6 +47,7 @@ const run = async () => {
     const isSuccess = setWtColorTheme(colorThemeDetail, wtConfigFilePath);
     if(isSuccess) {
       outputSuccess('Change the color theme successfully!')
+      showColorboard();
     }
     else {
       break;
