@@ -1,14 +1,15 @@
 {
   "name": "wtcolor",
-  "version": "1.0.0",
-  "description": "Select the color theme of Windows Terminal.",
+  "version": "0.0.2",
+  "description": "A tool that can change color theme of Windows Terminal conveniently and easily!",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js"
   },
-  "keywords": [],
   "author": "Crawler995",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://github.com/Crawler995/wtcolor",
+  "keywords": ["Windows Terminal", "color", "theme"],
   "bin": {
     "wtcolor": "./src/index.js"
   },
