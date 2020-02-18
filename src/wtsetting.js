@@ -46,7 +46,13 @@ const removeLineComment = (fileContent) => {
 };
 
 const setWtColorTheme = (colorThemeDetail, wtConfigFilePath) => {
-  let fileContent = fs.readFileSync(wtConfigFilePath, 'utf8');
+  let fileContent = '';
+  try {
+    fileContent = fs.readFileSync(wtConfigFilePath, 'utf8');
+  } catch (error) {
+    outputError('Open config file failed! Please check the given path.');
+    return false;
+  }
   fileContent = removeLineComment(fileContent);
   const configObj = JSON.parse(fileContent);
 
