@@ -1,0 +1,20 @@
+{
+  "name": "wtcolor",
+  "version": "1.0.0",
+  "description": "Select the color theme of Windows Terminal.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "Crawler995",
+  "license": "ISC",
+  "bin": {
+    "wtcolor": "./src/index.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "clui": "^0.3.6",
+    "inquirer": "^7.0.4"
+  }
+}
