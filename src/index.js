@@ -18,7 +18,8 @@ const {
 } = require('./ask');
 const {
   getWtConfigFilePath,
-  setWtColorTheme
+  setWtColorTheme,
+  saveConfigFilePathLocally
 } = require('./wtsetting');
 
 const run = async () => {
@@ -37,20 +38,23 @@ const run = async () => {
       return;
     }
 
-    if(wtConfigFilePath === '') {
-      wtConfigFilePath = getWtConfigFilePath();
+    while(true) {
       if(wtConfigFilePath === '') {
-        wtConfigFilePath = await (await askUserWtConfigFilePath()).wtConfigFilePath;
+        wtConfigFilePath = getWtConfigFilePath();
+        if(wtConfigFilePath === '') {
+          wtConfigFilePath = await (await askUserWtConfigFilePath()).wtConfigFilePath;
+          saveConfigFilePathLocally(wtConfigFilePath);
+        }
       }
-    }
 
-    const isSuccess = setWtColorTheme(colorThemeDetail, wtConfigFilePath);
-    if(isSuccess) {
-      outputSuccess('Change the color theme successfully!')
-      showColorboard();
-    }
-    else {
-      break;
+      const isSuccess = setWtColorTheme(colorThemeDetail, wtConfigFilePath);
+      if(isSuccess) {
+        outputSuccess('Change the color theme successfully!')
+        showColorboard();
+        break;
+      }
+
+      wtConfigFilePath = '';
     }
 
     const { isUserSatisfied } = await askUserIsSatisfied();

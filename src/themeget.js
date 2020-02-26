@@ -21,7 +21,7 @@ const getColorThemeList = () => {
     } catch (error) {
       spinner.stop();
       outputError('Get the color theme list error: ' + error);
-      reject();
+      resolve(undefined);
     }
   });
 };
@@ -40,7 +40,7 @@ const getDetailByColorThemeName = (colorThemeName) => {
     } catch (error) {
       spinner.stop();
       outputError(`Get the detail of color theme "${colorThemeName}" error: ${error}`);
-      reject();
+      resolve(undefined);
     }
   })
 };
