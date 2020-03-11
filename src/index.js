@@ -1,55 +1,42 @@
 #!/usr/bin/env node
 
-const inquirer = require('inquirer');
-const {
-  outputSuccess,
-  outputError,
-  outputInfo,
-  showColorboard
-} = require('./colorout');
-const {
-  getColorThemeList,
-  getDetailByColorThemeName
-} = require('./themeget');
-const {
-  userSelectColorTheme,
-  askUserIsSatisfied,
-  askUserWtConfigFilePath
-} = require('./ask');
-const {
-  getWtConfigFilePath,
-  setWtColorTheme,
-  saveConfigFilePathLocally
-} = require('./wtsetting');
+const { outputSuccess, showColorboard } = require('./colorout');
+const { getColorThemeList, getDetailByColorThemeName } = require('./themeget');
+const { userSelectColorTheme, askUserIsSatisfied, askUserWtConfigFilePath } = require('./ask');
+const { getWtConfigFilePath, setWtColorTheme, saveConfigFilePathLocally } = require('./wtsetting');
+const events = require('events');
 
 const run = async () => {
+  const emitter = new events.EventEmitter();
+  emitter.setMaxListeners(100);
+
   const colorThemeList = await getColorThemeList();
-  if(colorThemeList === undefined) {
+  if (colorThemeList === undefined) {
     return;
   }
 
   let lastColorThemeIndex = 0;
   let wtConfigFilePath = '';
 
-  while(true) {
+  while (true) {
     const { colorThemeName } = await userSelectColorTheme(colorThemeList, lastColorThemeIndex);
     const colorThemeDetail = await getDetailByColorThemeName(colorThemeName);
-    if(colorThemeDetail === undefined) {
+    if (colorThemeDetail === undefined) {
       return;
     }
 
-    while(true) {
-      if(wtConfigFilePath === '') {
+    while (true) {
+      if (wtConfigFilePath === '') {
         wtConfigFilePath = getWtConfigFilePath();
-        if(wtConfigFilePath === '') {
+        if (wtConfigFilePath === '') {
           wtConfigFilePath = await (await askUserWtConfigFilePath()).wtConfigFilePath;
           saveConfigFilePathLocally(wtConfigFilePath);
         }
       }
 
       const isSuccess = setWtColorTheme(colorThemeDetail, wtConfigFilePath);
-      if(isSuccess) {
-        outputSuccess('Change the color theme successfully!')
+      if (isSuccess) {
+        outputSuccess('Change the color theme successfully!');
         showColorboard();
         break;
       }
@@ -58,14 +45,13 @@ const run = async () => {
     }
 
     const { isUserSatisfied } = await askUserIsSatisfied();
-    if(isUserSatisfied) {
-      outputSuccess('Bye~ Have a nice day!')
+    if (isUserSatisfied) {
+      outputSuccess('Bye~ Have a nice day!');
       break;
     }
 
     lastColorThemeIndex = colorThemeList.indexOf(colorThemeName);
   }
 };
-
 
 run();
