@@ -7,7 +7,8 @@
     "start": "node ./src/index.js",
     "lint": "./node_modules/.bin/eslint ./src/**",
     "format": "./node_modules/.bin/prettier --config .prettierrc --write ./{src,test}/**/*.js",
-    "test": "nyc --es-modules=false ./node_modules/.bin/mocha"
+    "test": "nyc --es-modules=false ./node_modules/.bin/mocha",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "Crawler995",
   "license": "MIT",
