@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const inquirer = require('inquirer');
 
 const userSelectColorTheme = (colorThemeList, defaultIndex) => {
@@ -29,7 +30,8 @@ const askUserWtConfigFilePath = () => {
     {
       name: 'wtConfigFilePath',
       type: 'input',
-      message: 'You can input the config file absolute path manually: '
+      message:
+        'You can input the config file absolute path manually (e.g. C:\\aaa\\bbb\\profiles.json): '
     }
   ]);
 };

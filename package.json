@@ -1,12 +1,13 @@
 {
   "name": "wtcolor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A tool that can change color theme of Windows Terminal conveniently and easily!",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
-    "lint": "eslint ./src/**",
-    "format": "prettier --config .prettierrc --write ./src/**/*.js"
+    "lint": "./node_modules/.bin/eslint ./src/**",
+    "format": "./node_modules/.bin/prettier --config .prettierrc --write ./{src,test}/**/*.js",
+    "test": "nyc --es-modules=false ./node_modules/.bin/mocha"
   },
   "author": "Crawler995",
   "license": "MIT",
@@ -23,10 +24,16 @@
     "axios": "^0.19.2",
     "clui": "^0.3.6",
     "comment-json": "^3.0.2",
-    "inquirer": "^7.0.4"
+    "inquirer": "^7.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
-    "prettier": "^1.19.1"
+    "mocha": "^7.1.0",
+    "mock-fs": "^4.11.0",
+    "nock": "^12.0.2",
+    "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
+    "sinon": "^9.0.1"
   }
 }
