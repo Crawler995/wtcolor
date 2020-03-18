@@ -137,7 +137,16 @@ describe('test wtsetting.js', () => {
       expect(setScheme(colorThemeName, configObj)).to.be.false;
     });
 
-    it('should return false if the given configObj.profiles.list === undefined', () => {
+    it('should return false if the given configObj.profiles isn\'t object or array', () => {
+      const colorThemeName = 'testTheme';
+      const configObj = {
+        profiles: 'test'
+      };
+
+      expect(setScheme(colorThemeName, configObj)).to.be.false;
+    });
+
+    it('should return false if the given configObj.profiles is object but configObj.profiles.list === undefined', () => {
       const colorThemeName = 'testTheme';
       const configObj = {
         profiles: {}
@@ -162,6 +171,24 @@ describe('test wtsetting.js', () => {
             { name: 'Azure Cloud Shell', colorScheme: 'testTheme' }
           ]
         }
+      };
+
+      expect(setScheme(colorThemeName, configObj)).to.be.true;
+      expect(configObj).to.deep.equal(expectedConfigObj);
+    });
+
+    it('should return true and set colorScheme of each item in configObj.profiles (Array) to the given colorThemeName', () => {
+      const colorThemeName = 'testTheme';
+      const configObj = {
+        profiles: [{ name: 'Windows PowerShell' }, { name: 'cmd' }, { name: 'Azure Cloud Shell' }]
+      };
+
+      const expectedConfigObj = {
+        profiles: [
+          { name: 'Windows PowerShell', colorScheme: 'testTheme' },
+          { name: 'cmd', colorScheme: 'testTheme' },
+          { name: 'Azure Cloud Shell', colorScheme: 'testTheme' }
+        ]
       };
 
       expect(setScheme(colorThemeName, configObj)).to.be.true;

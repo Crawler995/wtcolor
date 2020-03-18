@@ -1,6 +1,6 @@
 {
   "name": "wtcolor",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A tool that can change color theme of Windows Terminal conveniently and easily!",
   "main": "index.js",
   "scripts": {

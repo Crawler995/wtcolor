@@ -48,13 +48,34 @@ const addSchemes = (colorThemeDetail, configObj) => {
 };
 
 const setScheme = (colorThemeName, configObj) => {
-  if (configObj.profiles === undefined || configObj.profiles.list === undefined) {
+  // profiles can be an array:
+  // profiles: [...]
+  // or an object like this:
+  // profiles: { list: [...] }
+  if (configObj.profiles === undefined) {
     return false;
   }
 
-  configObj.profiles.list.forEach(item => {
-    item.colorScheme = colorThemeName;
-  });
+  const { profiles } = configObj;
+  const type = Object.prototype.toString.call(profiles);
+
+  if (type === '[object Object]') {
+    if (profiles.list === undefined) {
+      return false;
+    }
+
+    profiles.list.forEach(item => {
+      item.colorScheme = colorThemeName;
+    });
+  } else if (type === '[object Array]') {
+    configObj.profiles = profiles.map(item => ({
+      ...item,
+      colorScheme: colorThemeName
+    }));
+  } else {
+    return false;
+  }
+
   return true;
 };
 
