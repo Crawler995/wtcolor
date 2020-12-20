@@ -11,7 +11,7 @@ const getWtConfigFilePath = () => {
   const basePath = path.resolve(os.homedir(), 'AppData\\Local\\Packages');
   // https://github.com/microsoft/terminal/blob/2d707f102bf27d455e15dcc6001337a8da6869c2/doc/user-docs/UsingJsonSettings.md
   // The settings are stored in the file:
-  // $env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json
+  // $env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
   let wtDirPathArr = [];
   if (fs.existsSync(basePath))
     wtDirPathArr = fs
@@ -30,7 +30,7 @@ const getWtConfigFilePath = () => {
     }
   }
 
-  return path.resolve(basePath, `${wtDirPathArr[0]}\\LocalState\\profiles.json`);
+  return path.resolve(basePath, `${wtDirPathArr[0]}\\LocalState\\settings.json`);
 };
 
 const addSchemes = (colorThemeDetail, configObj) => {
