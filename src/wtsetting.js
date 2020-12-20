@@ -9,7 +9,7 @@ const myConfigFilePath = path.resolve(os.homedir(), 'wtcolor.json');
 
 const getWtConfigFilePath = () => {
   const basePath = path.resolve(os.homedir(), 'AppData\\Local\\Packages');
-  // https://github.com/microsoft/terminal/blob/2d707f102bf27d455e15dcc6001337a8da6869c2/doc/user-docs/UsingJsonSettings.md
+  // https://docs.microsoft.com/en-US/windows/terminal/customize-settings/global-settings
   // The settings are stored in the file:
   // $env:LocalAppData\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
   let wtDirPathArr = [];
