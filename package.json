@@ -22,7 +22,7 @@
     "wtcolor": "./src/index.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "clui": "^0.3.6",
     "comment-json": "^3.0.2",
     "inquirer": "^7.0.0"
