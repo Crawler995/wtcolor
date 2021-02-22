@@ -5,9 +5,17 @@ const { parse, stringify } = require('comment-json');
 
 const { outputError } = require('./colorout');
 
-const myConfigFilePath = path.resolve(os.homedir(), 'wtcolor.json');
+// const myConfigFilePath = path.resolve(os.homedir(), 'wtcolor.json');
+const myConfigFilePath = './wtcolor.json'
 
 const getWtConfigFilePath = () => {
+  try {
+    // get user given path
+    const wtConfigFilePath = JSON.parse(fs.readFileSync(myConfigFilePath, 'utf8'))
+      .wtConfigFilePath;
+    return wtConfigFilePath;
+  } catch (error) { }
+
   const basePath = path.resolve(os.homedir(), 'AppData\\Local\\Packages');
   // https://docs.microsoft.com/en-US/windows/terminal/customize-settings/global-settings
   // The settings are stored in the file:
@@ -19,18 +27,17 @@ const getWtConfigFilePath = () => {
       .filter(path => /^Microsoft\.WindowsTerminal_.+$/.test(path));
 
   if (wtDirPathArr.length === 0) {
-    try {
-      // get user given path
-      const wtConfigFilePath = JSON.parse(fs.readFileSync(myConfigFilePath, 'utf8'))
-        .wtConfigFilePath;
-      return wtConfigFilePath;
-    } catch (error) {
-      outputError('Find Windows Terminal config file failed!');
-      return '';
-    }
+    return '';
   }
 
-  return path.resolve(basePath, `${wtDirPathArr[0]}\\LocalState\\settings.json`);
+  const defaultWtConfigFilePath = [
+    path.resolve(basePath, `${wtDirPathArr[0]}\\LocalState\\settings.json`)
+  ].find((p) => fs.existsSync(p)) || '';
+
+  if (defaultWtConfigFilePath === '') {
+    outputError('Find Windows Terminal config file failed!');
+  }
+  return defaultWtConfigFilePath;
 };
 
 const addSchemes = (colorThemeDetail, configObj) => {
